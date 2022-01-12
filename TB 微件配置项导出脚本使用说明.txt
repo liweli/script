@@ -1,0 +1,27 @@
+导出脚本：GetConfigurationJson.js
+该脚本使用node js编写，需运行在windows环境下，运行后导出指定用户的规则链库，设备配置，部件库，仪表盘库并以json格式保存
+设计思路：
+首先通过https://ip/api/auth/login接口获取token，之后通过分页查询接口获取对应规则链或部件的id，再根据id请求获得对应的响应，最后把响应保存为json格式的文件
+使用方式：
+使用前需要安装node js
+安装完nodejs后，接着安装request，fs模块
+npm install -g request
+npm install -g fs
+接着修改脚本中
+var ip="https://ip";的ip值
+与
+var user={
+	username: "tenant@thingsboard.org",
+	password: "tenant"
+}
+中的用户名与密码，以便于脚本获取对应用户的配置
+运行node GetConfigurationJson.js
+
+
+
+导入脚本：pushConfigurationJson.js
+该脚本使用node js编写，需运行在windows环境下，运行后将指定文件夹下的json文件导入到指定用户中，另外本脚本只进行提交，不涉及tb服务中配置的删除
+设计思路：
+首先依照导出脚本创造的文件夹格式读取配置文件，通过https://ip/api/auth/login接口获取token，之后将读取到的信息通过接口发送请求导入到tb服务中心
+目前导入的配置文件有：规则链库，部件库
+使用方式类似导出脚本
